@@ -1,9 +1,12 @@
-name: Build & Deploy to Play Store
+name: Build
 
 on:
   push:
     branches: 
-      - main
+      - main   
+  pull_request:
+    branches:
+      - main 
 
 jobs:
   build:
@@ -16,7 +19,7 @@ jobs:
       - name: Flutter o'rnatish
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: '3.24.3'  
 
       - name: Dependenciyalarni yuklash
         run: flutter pub get
@@ -27,20 +30,5 @@ jobs:
       - name: Testlarni ishlatish
         run: flutter test
 
-      - name: Release APK build qilish
-        run: flutter build appbundle --release
-
-      - name: .aab faylni saqlash (artefakt sifatida)
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-aab
-          path: build/app/outputs/bundle/release/app-release.aab
-
-      - name: Google Play'ga deploy qilish
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: ${{ secrets.PACKAGE_NAME }}
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
-          track: internal   
-          whatsNewDirectory: release-notes/
+      - name: APK build qilish
+        run: flutter build apk --release
