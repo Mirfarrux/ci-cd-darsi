@@ -19,7 +19,7 @@ jobs:
       - name: Flutter o'rnatish
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.0'   # Dart 3.8+ bilan ishlaydi
+          flutter-version: '3.35.3'   # Dart 3.8+ bilan ishlaydi
 
       - name: Dependenciyalarni yuklash
         run: flutter pub get
